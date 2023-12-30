@@ -3,10 +3,16 @@ namespace ConsoleinlOJ.Users;
 
 public class UserManager
 {
+    private List<User> existingUsers;
+    
+    public UserManager() {
+        existingUsers = ReadUsersFromFile();
+    }    
     public void AddNewUser()
     {
+        
         // Prompt the user for input
-        Console.Write("Enter username: ");
+        Console.Write("Enter First name: ");
         string username = Console.ReadLine()!;
 
         Console.Write("Enter last name: ");
@@ -44,6 +50,8 @@ public class UserManager
         string filePath = Path.Combine("C:\\projects", "users.json");
         File.WriteAllText(filePath, json);
 
+        
+        SaveUsersToFile(existingUsers);
         Console.WriteLine("User information saved to users.json");
     }
 
@@ -138,6 +146,16 @@ public class UserManager
         {
             Console.WriteLine("Error: Unable to retrieve user data from the file.");
         }
+    }
+
+    private void SaveUsersToFile(List<User> users)
+    {
+        // Convert the list of users to JSON
+        string json = JsonConvert.SerializeObject(users, Newtonsoft.Json.Formatting.Indented);
+
+        // Save JSON to the file
+        string filePath = Path.Combine("C:\\projects", "users.json");
+        File.WriteAllText(filePath, json);
     }
 }
 
