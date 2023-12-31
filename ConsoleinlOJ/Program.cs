@@ -2,12 +2,9 @@
 using Newtonsoft.Json;
 using System.Xml;
 
+UserManager userManager = new();
 
-
-
-    UserManager userManager = new();
-
-    bool exit = false;
+bool exit = false;
 
     while (!exit)
     {

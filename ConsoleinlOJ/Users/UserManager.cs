@@ -5,13 +5,14 @@ public class UserManager
 {
     private List<User> existingUsers;
     
+    //Loading the file at start. 
     public UserManager() {
         existingUsers = ReadUsersFromFile();
     }    
     public void AddNewUser()
     {
         
-        // Prompt the user for input
+        // All input strings. 
         Console.Write("Enter First name: ");
         string username = Console.ReadLine()!;
 
@@ -27,7 +28,7 @@ public class UserManager
         Console.Write("Enter Postalcode: ");
         string postalcode = Console.ReadLine()!;
 
-        // Create a user object
+        // Create a user.
         User newUser = new()
         {
             Username = username,
@@ -37,13 +38,13 @@ public class UserManager
             Phone = phone
         };
 
-        // Read existing users from the file, if any
+        // Read existing users from the file.
         List<User> existingUsers = ReadUsersFromFile();
 
-        // Add the new user to the list
+        // Add the new user to the list.
         existingUsers.Add(newUser);
 
-        // Convert the list of users to JSON
+        // Convert the list to JSON
         string json = JsonConvert.SerializeObject(existingUsers, Newtonsoft.Json.Formatting.Indented);
 
         // Save JSON to a file
@@ -77,10 +78,10 @@ public class UserManager
 
     public void ListAllUsers()
     {
-        // Retrieve the list of existing users
+        // Retrieve the list of users
         List<User> existingUsers = ReadUsersFromFile();
 
-        // Display user information
+        // Display users.
         if (existingUsers.Count > 0)
         {
             Console.WriteLine("Existing users:");
@@ -97,19 +98,19 @@ public class UserManager
     }
     public void ViewUserByEmail()
     {
-        // Prompt the user for the email to view
+        //Asking for the email to be able to see specific info about a specific user. 
         Console.Write("Enter the email of the user to view: ");
         string emailToView = Console.ReadLine();
 
-        // Retrieve the list of existing users
+        // Retrieve the list of users
         List<User> existingUsers = ReadUsersFromFile();
 
-        // Find the user with the specified email (case-insensitive)
+        //made it case-insensitive.
         User userToView = existingUsers.Find(u => u.Email.Equals(emailToView, StringComparison.OrdinalIgnoreCase))!;
 
         if (userToView != null)
         {
-            // Display user information
+            
             Console.WriteLine($"User found with email '{emailToView}':");
             Console.WriteLine($"Username: {userToView.Username}, Last Name: {userToView.LastName}, Email: {userToView.Email}");
         }
@@ -121,22 +122,22 @@ public class UserManager
 
     public void DeleteUserByEmail()
     {
-        // Prompt the user for the email to delete
+        //Ask the user for the email to delete
         Console.Write("Enter the email of the user to delete: ");
         string emailToDelete = Console.ReadLine();
 
-        // Retrieve the list of existing users
+        // Retrieve the list of users
         List<User> existingUsers = ReadUsersFromFile();
 
         if (existingUsers != null)
         {
-            // Find and remove all users with the specified email (case-insensitive)
+            //case-insensitive remowal of user/user with that email.
             existingUsers.RemoveAll(u => u.Email.Equals(emailToDelete, StringComparison.OrdinalIgnoreCase));
 
             // Convert the updated list of users to JSON
             string json = JsonConvert.SerializeObject(existingUsers, Newtonsoft.Json.Formatting.Indented);
 
-            // Save JSON to the file
+            // Save JSON to file
             string filePath = Path.Combine("C:\\projects", "users.json");
             File.WriteAllText(filePath, json);
 
@@ -150,7 +151,7 @@ public class UserManager
 
     private void SaveUsersToFile(List<User> users)
     {
-        // Convert the list of users to JSON
+        // Convert the list to JSON
         string json = JsonConvert.SerializeObject(users, Newtonsoft.Json.Formatting.Indented);
 
         // Save JSON to the file
